@@ -1,27 +1,21 @@
-import Header from './Header';
-import Footer from './Footer';
 import App from './App';
-import Home from './Home';
-import Write from './Write';
-import Profile from './Profile';
-import Feed from './Feed';
-import Uploader from './Uploader';
-import Post from './Post';
-import NotFound from './NotFound';
-import NavMenuItemLink from './NavMenuItemLink';
+import Footer from './Footer';
+import Header from './Header';
 import Loader from './Loader';
+import LogForm from './LogForm';
+import Modal from './Modal';
+import NavMenuItemLink from './NavMenuItemLink';
+import PageMessage from './PageMessage';
+import Uploader from './Uploader';
 
 export {
     App,
-    Header,
     Footer,
-    Home,
-    Write,
-    Profile,
-    Feed,
-    Uploader,
-    Post,
-    NotFound,
-    NavMenuItemLink,
+    Header,
     Loader,
+    LogForm,
+    Modal,
+    NavMenuItemLink,
+    PageMessage,
+    Uploader,
 };

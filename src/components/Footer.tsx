@@ -3,16 +3,19 @@ import {
     FooterContainer,
     FooterText,
     FooterLink,
+    LayoutInnerContainer,
 } from '~styles/components';
 
 const Footer = () => (
     <FooterContainer>
-        <FooterText>
-            Designed and developed by{' '}
-            <FooterLink href="mailto:marie.bawanan@gmail.com">
-                Marie Bawanan
-            </FooterLink>
-        </FooterText>
+        <LayoutInnerContainer>
+            <FooterText>
+                Designed and developed by{' '}
+                <FooterLink href="mailto:marie.bawanan@gmail.com">
+                    Marie Bawanan
+                </FooterLink>
+            </FooterText>
+        </LayoutInnerContainer>
     </FooterContainer>
 );
 

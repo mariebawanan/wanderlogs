@@ -1,7 +1,4 @@
-import React, { ChangeEventHandler, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { RootState } from '~redux/reducers';
-
+import React, { useState } from 'react';
 import { firebaseStorage } from '~firebase/initFirebase';
 import {
     UploaderContainer,
@@ -11,78 +8,53 @@ import {
     UploaderProgress,
 } from '~styles/components';
 
-type Props = {
-    urls: string[];
-    setUrls: (urls: string[]) => void;
+type UploaderProps = {
+    url: string;
+    setUrl: (url: string) => void;
 };
 
-type Image = {
-    id: number;
-    name: string;
-    lastModified: Date;
-    lastModifiedDate: Date;
-};
-
-const Upload = ({ urls, setUrls }: Props) => {
-    const [images, setImages] = useState<{}[]>([]);
+const Upload = ({ url, setUrl }: UploaderProps) => {
     const [progress, setProgress] = useState(0);
     const [isUploading, setIsUploading] = useState(false);
 
-    const handleChange = (e: Event) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         e.preventDefault();
 
         const input = e.target as HTMLInputElement;
-
         if (!input.files?.length) return;
 
+        const image = input.files[0];
+
         setIsUploading(true);
-        const promises = [];
-        for (const [key, value] of Object.entries(input.files)) {
-            if (input.files?.length) {
-                const newImage: File = value;
-                setImages((prevState) => [...prevState, newImage]);
 
-                const uploadTask = firebaseStorage
-                    .ref(`images/${newImage.name}`)
-                    .put(newImage);
-
-                promises.push(uploadTask);
-
-                uploadTask.on(
-                    'state_changed',
-                    (snapshot) => {
-                        const progress = Math.round(
-                            (snapshot.bytesTransferred /
-                                snapshot.totalBytes) *
-                                100
-                        );
-                        setProgress(progress);
-                    },
-                    (error) => console.error(error),
-                    async () => {
-                        await firebaseStorage
-                            .ref('images')
-                            .child(newImage.name)
-                            .getDownloadURL()
-                            .then((urls) =>
-                                setUrls((prevState) => [
-                                    ...prevState,
-                                    urls,
-                                ])
-                            );
-                    }
+        const uploadTask = firebaseStorage.ref(`covers/${image.name}`).put(image);
+        uploadTask.on(
+            'state_changed',
+            (snapshot) => {
+                const progress = Math.round(
+                    (snapshot.bytesTransferred / snapshot.totalBytes) * 100
                 );
+                setProgress(progress);
+            },
+            (error) => console.error(error),
+            () => {
+                firebaseStorage
+                    .ref('covers')
+                    .child(image.name)
+                    .getDownloadURL()
+                    .then((url) => {
+                        setUrl(url);
+                    });
+                setIsUploading(false);
             }
-        }
-
-        Promise.all(promises).then(() => setIsUploading(false));
+        );
     };
 
     return (
         <UploaderContainer>
-            <UploaderLabel className="custom-file-upload">
+            <UploaderLabel>
                 <input type="file" multiple onChange={handleChange} />
-                Upload images
+                Upload Cover Photo
             </UploaderLabel>
 
             {isUploading && (
@@ -91,16 +63,11 @@ const Upload = ({ urls, setUrls }: Props) => {
                     Uploading... {progress}
                 </div>
             )}
-
-            <UploaderPreview>
-                {urls.map((url: string, i: number) => (
-                    <UploaderPreviewImg
-                        key={i}
-                        src={url}
-                        alt="firebase-image"
-                    />
-                ))}
-            </UploaderPreview>
+            {url && (
+                <UploaderPreview>
+                    <UploaderPreviewImg src={url} alt="cover photo" />
+                </UploaderPreview>
+            )}
         </UploaderContainer>
     );
 };

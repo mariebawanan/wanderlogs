@@ -1,33 +1,24 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
-import {
-    EditIcon,
-    ListIcon,
-    LogoutIcon,
-    UserIcon,
-} from '~assets/icons';
-import {
-    NavMenuItemLinkIcon,
-    NavMenuItemLinkText,
-} from '~styles/components';
+import { NavMenuItemLinkIcon, NavMenuItemLinkText, NavLink } from '~styles/components';
+import { EditIcon, ListIcon, LogoutIcon, UserIcon } from '~assets/icons';
 
-interface Props {
+type NavMenuItemLinkProps = {
     icon: string;
-    text: string;
+    text?: string;
     path: string;
-}
+};
 
-const NavMenuItemLink: React.FC<Props> = ({ icon, text, path }) => {
+const NavMenuItemLink = ({ icon, text, path }: NavMenuItemLinkProps) => {
     const getIcon = () => {
         switch (icon) {
             case 'write':
-                return <NavMenuItemLinkIcon src={EditIcon} />;
+                return EditIcon;
             case 'list':
-                return <NavMenuItemLinkIcon src={ListIcon} />;
+                return ListIcon;
             case 'user':
-                return <NavMenuItemLinkIcon src={UserIcon} />;
+                return UserIcon;
             case 'logout':
-                return <NavMenuItemLinkIcon src={LogoutIcon} />;
+                return LogoutIcon;
             default:
                 return;
         }
@@ -35,7 +26,7 @@ const NavMenuItemLink: React.FC<Props> = ({ icon, text, path }) => {
 
     return (
         <NavLink to={path}>
-            {getIcon()}
+            <NavMenuItemLinkIcon src={getIcon()} />
             <NavMenuItemLinkText>{text}</NavMenuItemLinkText>
         </NavLink>
     );

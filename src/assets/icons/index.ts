@@ -5,3 +5,6 @@ export { default as LogoutIcon } from './logout.svg';
 export { default as NoteIcon } from './note.svg';
 export { default as UserIcon } from './user.svg';
 export { default as LoaderIcon } from './loader.svg';
+export { default as LandscapeIcon } from './landscape.svg';
+export { default as TicketIcon } from './ticket.svg';
+export { default as LostIcon } from './lost.svg';

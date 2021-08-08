@@ -1,19 +1,12 @@
 import React from 'react';
+import { LoaderContainer, LoaderImage, LoaderText } from '~styles/components';
 import { LoaderIcon } from '~assets/icons';
 
-const Loader = (text: string) => (
-    <div
-        style={{
-            width: '100%',
-            height: '100%',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            alignItems: 'center',
-        }}
-    >
-        <p>fetching your feed...</p>
-    </div>
+const Loader = ({ text }: { text: string }) => (
+    <LoaderContainer>
+        <LoaderImage src={LoaderIcon} />
+        <LoaderText>{text}</LoaderText>
+    </LoaderContainer>
 );
 
 export default Loader;

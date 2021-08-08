@@ -1,12 +1,14 @@
-import { createStore } from 'redux';
-import { rootReducer } from './reducers';
+import { configureStore } from '@reduxjs/toolkit';
+import logs from './reducers/logs';
 
-const store = createStore(
-    rootReducer,
-    typeof window === 'object' &&
-        typeof window.__REDUX_DEVTOOLS_EXTENSION__ !== 'undefined'
-        ? window.__REDUX_DEVTOOLS_EXTENSION__()
-        : (f) => f
-);
+const store = configureStore({
+    reducer: {
+        logs: logs,
+    },
+});
 
 export default store;
+
+// Infer the `RootState` and `AppDispatch` types from the store itself
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;

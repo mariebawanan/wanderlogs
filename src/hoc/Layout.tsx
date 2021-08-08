@@ -1,9 +1,9 @@
-import React, { FC } from 'react';
+import React from 'react';
 import { Header, Footer } from '~components';
-import { GlobalStyle } from '~styles';
 import { LayoutContainer, MainContainer } from '~styles/components';
+import { GlobalStyle } from '~styles';
 
-const Layout = ({ children }: { children: React.ReactChildren }) => (
+const Layout = ({ children }: { children: React.ReactChild }) => (
     <LayoutContainer>
         <GlobalStyle />
         <Header />
